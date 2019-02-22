@@ -105,7 +105,7 @@ unicode for greek
 ```
 f # comment until end of line
 
-\#\#\#
+###
 multiline comment between start of line ### and next ###
-\#\#\#
+###
 ```
