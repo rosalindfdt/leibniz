@@ -58,7 +58,11 @@ etc
 
 {X} = `{x^2, x E P, 1 < x <= 10}` = {4, 9, 25, 49, 81}
 
-{X} = `{x^3, x E (1, 5)}` = {8, 81, 125}
+Y in a set fefers to {Y}?
+
+or
+
+{Y} in set definitions?
 
 ---
 
@@ -86,7 +90,7 @@ x^3 /
 ```
 ```
 x^3
-\-\-\-
+---
 3
 ```
 
@@ -94,7 +98,9 @@ x^3 /3 = what on 3?
 
 x^3/ 3 = x cubed on what?
 
-(){}[] are all the same
+()[] are the same, evaluated from innermost
+
+{} denotes a set unless () or {} are inside
 
 unicode for greek
 
