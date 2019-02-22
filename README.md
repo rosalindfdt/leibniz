@@ -23,7 +23,7 @@ x ^3 = what to the 3?
 x^ 3 = x to the what?
 x ^ 3 = what to the what?
 
-Ashe: "x^3 -1/3 / 3"?
+"x^3 -1/3 / 3"?
 
 possibility: 
 x^3 /
