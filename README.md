@@ -31,28 +31,40 @@ f'(F): derive then integrate f, should return f
 f(g(x)): evaluate f of g of x, evaluate g(x) then evaluate f(x) with g
 f o g(x): composition, same result as f(g(x))
 
+---
+
 # SETS
 
 RESERVED SETS:
+
 {P}, {N}, {Z}, {Q}, {R}, {C}, {H}, {G}
+
 (primes, naturals, integers, rationals, reals, complex, quarterions, gaussians)
+
 {} empty set
 
 sets denoted by {set}
+
 sets defined by {set} = {set definition}
+
 eg: {X} = {1, 2, ..., 10}
+
 x, ..., y = range of x to y inclusive
+
 {X} = (1, 3) = {2}
+
 {X} = (1, 3] = {2, 3}
+
 etc
 
 {X} = {x^2, x E P, 1 < x <= 10} = {4, 9, 25, 49, 81}
+
 {X} = {x^3, x E (1, 5)} = {8, 81, 125}
 
-
-
+---
 
 # ALGEBRA SHIT
+
 x^3 / 3 = x cubed divided by 3
 
 x^3/3 = x to the 3/3
@@ -73,6 +85,7 @@ possibility:
 x^3 /
       3
 ```
+```
 x^3
 \-\-\-
 3
@@ -86,11 +99,13 @@ x^3/ 3 = x cubed on what?
 
 unicode for greek
 
+---
+
 # COMMENTS
 ```
 f # comment until end of line
 
 \#\#\#
-multiline comment between start of line -- and next --
+multiline comment between start of line ### and next ###
 \#\#\#
 ```
