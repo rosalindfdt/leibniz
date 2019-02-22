@@ -48,7 +48,16 @@ variables only declared inside functions
 `f'(F)`: derive then integrate f, should return f
 
 `f(g(x))`: evaluate f of g of x, evaluate g(x) then evaluate f(x) with g
-`f o g(x)`: composition, same result as f(g(x))
+`fog(x)`: composition, same result as f(g(x))
+```
+f(x) := x + 2
+g(x) := x^2
+(f+g)(x) = (x + 2) + (x^2) = x^2 + x + 2
+(f-g)(x) = (x + 2) + (x^2) = -x^2 + x + 2
+
+f(x) := (x - 1) + (x + 3) returns f(x) = x + 2
+```
+functions are returned in order (right to left, 0, 1, 2, 3...)
 
 ---
 
@@ -77,7 +86,7 @@ etc
 
 {X} = `{x^2, x E P, 1 < x <= 10}` = {4, 9, 25, 49, 81}
 
-Y in a set fefers to {Y}?
+Y in a set refers to {Y}?
 
 or
 
@@ -133,3 +142,8 @@ f # comment until end of line
 multiline comment between start of line ### and next ###
 ###
 ```
+
+# NOTES
+* doing this in ruby
+* evaluate strings, return strings for indefinite
+* evaluate strings, return ints/floats for definite
