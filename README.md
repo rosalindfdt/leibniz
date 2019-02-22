@@ -32,6 +32,7 @@ defining an integral or derivative evaluates until the function is calculated an
 eg `f'(x) := 2x` produces `f(x) = x^2 +c`
 
 `F(x) := x^2` produces `f(x) = 2x` and locks `F(x) = x^2 +c where c=0`
+`f(x) = I(x^2)` produces `f(x) = x^3 / 3 + c`
 
 `+c where c=0` is hidden from output and calculation
 
@@ -58,6 +59,11 @@ g(x) := x^2
 f(x) := (x - 1) + (x + 3) returns f(x) = x + 2
 ```
 functions are returned in order (right to left, 0, 1, 2, 3...)
+
+## definite integrals
+with:
+`f(x) = I(x^2)` produces `f(x) = x^3 / 3 + c`
+`f(x) = (1,2) I(x^2) = F(2) - F(1) = (2^3 / 3) - (1^3 / 3) = 8/3 - 1/3 = 7/3`
 
 ---
 
