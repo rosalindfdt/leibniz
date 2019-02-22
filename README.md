@@ -16,9 +16,28 @@ F[0,1] should return 1/3
 `f(x)` should return f(x) = x^2
 
 `f(x) := expression` to define f(x)
+
 valid function and variable names: a-z, greek alphabet (lowercase)
 
 capitals refer to the integral of the corresponding lowercase function/variable
+
+abcdefghijklmnopqrstuvwxyz: functions, variables, can be redefined
+
+ABCDEFGHIJKLMNOPQRSTUVWXYZ: refer to the integral of the corresponding function
+
+[a..z]' is the derivative
+
+defining an integral or derivative evaluates until the function is calculated and stores that function
+
+eg `f'(x) := 2x` produces `f(x) = x^2 +c`
+
+`F(x) := x^2` produces `f(x) = 2x` and locks `F(x) = x^2 +c where c=0`
+
+`+c where c=0` is hidden from output and calculation
+
+variables only declared inside functions
+
+
 
 `f' or f'(x) or df/dx`: first derivative of f
 `f'', f'''`: second, third derivative etc
