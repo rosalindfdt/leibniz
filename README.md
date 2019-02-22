@@ -7,7 +7,7 @@ f' should return 2x
 df/dx should also return 2x
 
 f(x) := x^2
-F should return x^3 /3 +c
+F should return x^3 / 3 +c
 F' should return x^2
 dF/dx should also return x^2 (or dF?)
 F[0,1] should return 1/3 
@@ -32,7 +32,7 @@ defining an integral or derivative evaluates until the function is calculated an
 eg `f'(x) := 2x` produces `f(x) = x^2 +c`
 
 `F(x) := x^2` produces `f(x) = 2x` and locks `F(x) = x^2 +c where c=0`
-`f(x) = I(x^2)` produces `f(x) = x^3 / 3 + c`
+`f(x) = I(x^2)` produces `f(x) = x^3 / 3 +c`
 
 `+c where c=0` is hidden from output and calculation
 
@@ -49,14 +49,17 @@ variables only declared inside functions
 `f'(F)`: derive then integrate f, should return f
 
 `f(g(x))`: evaluate f of g of x, evaluate g(x) then evaluate f(x) with g
-`fog(x)`: composition, same result as f(g(x))
+`(fog)(x)`: composition, same result as f(g(x))
 ```
 f(x) := x + 2
 g(x) := x^2
-(f+g)(x) = (x + 2) + (x^2) = x^2 + x + 2
-(f-g)(x) = (x + 2) + (x^2) = -x^2 + x + 2
+(fog)(x) = ((x^2) + 2) = x^2+2
+(f+g)(x) = (x + 2) + (x^2) = x^2+x+2
+(f-g)(x) = (x + 2) - (x^2) = -x^2+x+2
+(f*g)(x) = (x + 2) * (x^2) = x(x^2) + 2(x^2) = x^3+2x^2
+(f/g)(x) = (x + 2) / (x^2) = (x + 2) / (x^2) = x+2 / x^2 
 
-f(x) := (x - 1) + (x + 3) returns f(x) = x + 2
+f(x) := (x-1) + (x+3) returns f(x) = x+2
 ```
 functions are returned in order (right to left, 0, 1, 2, 3...)
 
