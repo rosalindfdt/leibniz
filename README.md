@@ -160,7 +160,7 @@ multiline comment between start of line ### and next ###
 # ALGORITHMS
 
 * polynomials
-- identify exponents
-- multiply coefficient by exponent
-- reduce exponent
-- repeat
+ - identify exponents
+ - multiply coefficient by exponent
+ - reduce exponent
+ - repeat
