@@ -156,3 +156,11 @@ multiline comment between start of line ### and next ###
 * doing this in ruby
 * evaluate strings, return strings for indefinite
 * evaluate strings, return ints/floats for definite
+
+# ALGORITHMS
+
+* polynomials
+- identify exponents
+- multiply coefficient by exponent
+- reduce exponent
+- repeat
