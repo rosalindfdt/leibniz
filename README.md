@@ -157,8 +157,6 @@ multiline comment between start of line ### and next ###
 * evaluate strings, return strings for indefinite
 * evaluate strings, return ints/floats for definite
 
-<<<<<<< HEAD
-=======
 # ALGORITHMS
 
 * polynomials
@@ -166,4 +164,3 @@ multiline comment between start of line ### and next ###
   * multiply coefficient by exponent
   * reduce exponent
   * repeat
->>>>>>> 36d135f977ba783652a486c1fc8204db0d2a39c9
