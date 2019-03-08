@@ -98,7 +98,7 @@ class Polynomial {
         let h: Array<Term> = [];
         for (let item of g) {
             let coefficientmatch: RegExpMatchArray = item.match(/(\+|-)[0-9][0-9]*/g);
-            let variablematch: RegExpMatchArray = item.match(/[a-z]/g);
+            let variablematch: RegExpMatchArray = item.match(/[a-z](?!\^0)/g);
             let exponentmatch: RegExpMatchArray = item.match(/(?<=\^)[0-9][0-9]*/g)
 
             let coefficient: number;
@@ -109,9 +109,10 @@ class Polynomial {
                 coefficient = 1
             }
 
-            //variable is not optional and not going to be null
-            //this is kinda unnecessary but consistent could just be match[0]
-            let variable: string = variablematch[0]
+            let variable: string;
+            if (variablematch !== null) {
+                variable = variablematch[0]
+            }
 
             let exponent: number;
             if (exponentmatch !== null) {
@@ -121,16 +122,24 @@ class Polynomial {
                 exponent = 1;
             }
 
-            h.push({coefficient: coefficient, variable: variable, exponent: exponent});
+            //not x^0 -- handled with constants
+            if (variable !== undefined) {
+                h.push({coefficient: coefficient, variable: variable, exponent: exponent});
+            }
         }
 
         //CONSTANT TERMS
         //TODO:
-        //* x^0
+        //* x^0 YEP
         let c: Array<string> = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g)
+        let x: Array<string> = f.match(/(\+|-)[0-9][0-9]*(?=[a-z]\^0)/g)
+
         let k: Array<number> = [];
         for (let item in c) {
             k[item] = Number(c[item]);
+        }
+        for (let item in x) {
+            k.push(Number(x[item]));
         }
 
         let constant: number = 0;
@@ -147,6 +156,6 @@ class Polynomial {
     }
 }
 
-let f = new Polynomial("x^2 - 2x + 1 - 2");
+let f = new Polynomial("x^2 - 2x + 1 - 2 + 3x^0");
 
 console.log(f.evaluate());

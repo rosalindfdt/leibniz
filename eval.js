@@ -113,7 +113,7 @@ var Polynomial = /** @class */ (function () {
         for (var _i = 0, g_1 = g; _i < g_1.length; _i++) {
             var item = g_1[_i];
             var coefficientmatch = item.match(/(\+|-)[0-9][0-9]*/g);
-            var variablematch = item.match(/[a-z]/g);
+            var variablematch = item.match(/[a-z](?!\^0)/g);
             var exponentmatch = item.match(/(?<=\^)[0-9][0-9]*/g);
             var coefficient = void 0;
             if (coefficientmatch !== null) {
@@ -123,9 +123,10 @@ var Polynomial = /** @class */ (function () {
                 //x = 1x
                 coefficient = 1;
             }
-            //variable is not optional and not going to be null
-            //this is kinda unnecessary but consistent could just be match[0]
-            var variable = variablematch[0];
+            var variable = void 0;
+            if (variablematch !== null) {
+                variable = variablematch[0];
+            }
             var exponent = void 0;
             if (exponentmatch !== null) {
                 exponent = Number(exponentmatch[0]);
@@ -134,15 +135,22 @@ var Polynomial = /** @class */ (function () {
                 //x = x^1
                 exponent = 1;
             }
-            h.push({ coefficient: coefficient, variable: variable, exponent: exponent });
+            //not x^0 -- handled with constants
+            if (variable !== undefined) {
+                h.push({ coefficient: coefficient, variable: variable, exponent: exponent });
+            }
         }
         //CONSTANT TERMS
         //TODO:
-        //* x^0
+        //* x^0 YEP
         var c = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g);
+        var x = f.match(/(\+|-)[0-9][0-9]*(?=[a-z]\^0)/g);
         var k = [];
         for (var item in c) {
             k[item] = Number(c[item]);
+        }
+        for (var item in x) {
+            k.push(Number(x[item]));
         }
         var constant = 0;
         for (var _a = 0, k_1 = k; _a < k_1.length; _a++) {
@@ -155,5 +163,5 @@ var Polynomial = /** @class */ (function () {
     };
     return Polynomial;
 }());
-var f = new Polynomial("x^2 - 2x + 1 - 2");
+var f = new Polynomial("x^2 - 2x + 1 - 2 + 3x^0");
 console.log(f.evaluate());
