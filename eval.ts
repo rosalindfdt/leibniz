@@ -5,6 +5,7 @@ interface Term {
 }
 
 class Functions {
+    //are these necessary?
     a?: Polynomial;
     b?: Polynomial;
     c?: Polynomial;
@@ -32,6 +33,7 @@ class Functions {
     y?: Polynomial;
     z?: Polynomial;
 
+    //also is this?
     assign(func: Polynomial) {
         switch(func.func[0]) {
             case "a": { this.a = func; }
@@ -78,12 +80,14 @@ class Polynomial {
 
     parse() {
         //TODO:
-        //* convert back to formatted string
+        // * convert back to formatted string
         let f: Array<string> = this.func.match(/^[a-z](?=:=)\([a-z]\)/);
         return f;
     }
 
     evaluate() {
+        //TODO:
+        // *
         let f: string = this.stripWhitespace(this.func)
         let g: Array<string> = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g)
         for (let term in g) {
@@ -130,7 +134,7 @@ class Polynomial {
 
         //CONSTANT TERMS
         //TODO:
-        //* x^0 YEP
+        // * x^0 YEP
         let c: Array<string> = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g)
         let x: Array<string> = f.match(/(\+|-)[0-9][0-9]*(?=[a-z]\^0)/g)
 
