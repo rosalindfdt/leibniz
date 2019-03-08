@@ -93,6 +93,8 @@ var Polynomial = /** @class */ (function () {
         return f.replace(/\s/g, "");
     };
     Polynomial.prototype.parse = function () {
+        //TODO:
+        //* convert back to formatted string
         var f = this.func.match(/^[a-z](?=:=)\([a-z]\)/);
         return f;
     };
@@ -100,6 +102,9 @@ var Polynomial = /** @class */ (function () {
         var f = this.stripWhitespace(this.func);
         var g = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g);
         for (var term in g) {
+            //prepend + to positive cx^e for consistency
+            //why though
+            //could just be g[0]
             if (g[term].match(/^(\+|-)/) === null) {
                 g[term] = "+" + g[term];
             }
@@ -107,23 +112,33 @@ var Polynomial = /** @class */ (function () {
         var h = [];
         for (var _i = 0, g_1 = g; _i < g_1.length; _i++) {
             var item = g_1[_i];
-            var coefficient = item.match(/(\+|-)[0-9][0-9]*/g);
-            var variable = item.match(/[a-z]/g)[0];
-            var exponent = item.match(/(?<=\^)[0-9][0-9]*/g);
-            if (coefficient !== null) {
-                coefficient = Number(coefficient[0]);
+            var coefficientmatch = item.match(/(\+|-)[0-9][0-9]*/g);
+            var variablematch = item.match(/[a-z]/g);
+            var exponentmatch = item.match(/(?<=\^)[0-9][0-9]*/g);
+            var coefficient = void 0;
+            if (coefficientmatch !== null) {
+                coefficient = Number(coefficientmatch[0]);
             }
             else {
+                //x = 1x
                 coefficient = 1;
             }
-            if (exponent !== null) {
-                exponent = Number(exponent[0]);
+            //variable is not optional and not going to be null
+            //this is kinda unnecessary but consistent could just be match[0]
+            var variable = variablematch[0];
+            var exponent = void 0;
+            if (exponentmatch !== null) {
+                exponent = Number(exponentmatch[0]);
             }
             else {
+                //x = x^1
                 exponent = 1;
             }
             h.push({ coefficient: coefficient, variable: variable, exponent: exponent });
         }
+        //CONSTANT TERMS
+        //TODO:
+        //* x^0
         var c = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g);
         var k = [];
         for (var item in c) {
@@ -140,6 +155,5 @@ var Polynomial = /** @class */ (function () {
     };
     return Polynomial;
 }());
-var x = { coefficient: 1, variable: "x", exponent: 2 };
 var f = new Polynomial("x^2 - 2x + 1 - 2");
 console.log(f.evaluate());

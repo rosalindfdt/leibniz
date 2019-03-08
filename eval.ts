@@ -101,22 +101,24 @@ class Polynomial {
             let variablematch: RegExpMatchArray = item.match(/[a-z]/g);
             let exponentmatch: RegExpMatchArray = item.match(/(?<=\^)[0-9][0-9]*/g)
 
-            if (coefficient !== null) {
-                let coefficient: number = Number(coefficientmatch[0]);
+            let coefficient: number;
+            if (coefficientmatch !== null) {
+                coefficient = Number(coefficientmatch[0]);
             } else {
                 //x = 1x
-                let coefficient: number = 1
+                coefficient = 1
             }
 
             //variable is not optional and not going to be null
             //this is kinda unnecessary but consistent could just be match[0]
             let variable: string = variablematch[0]
 
-            if (exponent !== null) {
-                let exponent: number = Number(exponentmatch[0]);
+            let exponent: number;
+            if (exponentmatch !== null) {
+                exponent = Number(exponentmatch[0]);
             } else {
                 //x = x^1
-                let exponent: number = 1;
+                exponent = 1;
             }
 
             h.push({coefficient: coefficient, variable: variable, exponent: exponent});
