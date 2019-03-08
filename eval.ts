@@ -77,6 +77,8 @@ class Polynomial {
     }
 
     parse() {
+        //TODO:
+        //* convert back to formatted string
         let f: Array<string> = this.func.match(/^[a-z](?=:=)\([a-z]\)/);
         return f;
     }
@@ -85,6 +87,9 @@ class Polynomial {
         let f: string = this.stripWhitespace(this.func)
         let g: Array<string> = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g)
         for (let term in g) {
+            //prepend + to positive cx^e for consistency
+            //why though
+            //could just be g[0]
             if (g[term].match(/^(\+|-)/) === null) {
                 g[term] = "+" + g[term];
             }
@@ -92,25 +97,34 @@ class Polynomial {
 
         let h: Array<Term> = [];
         for (let item of g) {
-            let coefficient: number | RegExpMatchArray = item.match(/(\+|-)[0-9][0-9]*/g);
-            let variable: string = item.match(/[a-z]/g)[0];
-            let exponent: number | RegExpMatchArray = item.match(/(?<=\^)[0-9][0-9]*/g)
+            let coefficientmatch: RegExpMatchArray = item.match(/(\+|-)[0-9][0-9]*/g);
+            let variablematch: RegExpMatchArray = item.match(/[a-z]/g);
+            let exponentmatch: RegExpMatchArray = item.match(/(?<=\^)[0-9][0-9]*/g)
 
             if (coefficient !== null) {
-                coefficient = Number(coefficient[0]);
+                let coefficient: number = Number(coefficientmatch[0]);
             } else {
-                coefficient = 1
+                //x = 1x
+                let coefficient: number = 1
             }
 
+            //variable is not optional and not going to be null
+            //this is kinda unnecessary but consistent could just be match[0]
+            let variable: string = variablematch[0]
+
             if (exponent !== null) {
-                exponent = Number(exponent[0]);
+                let exponent: number = Number(exponentmatch[0]);
             } else {
-                exponent = 1;
+                //x = x^1
+                let exponent: number = 1;
             }
 
             h.push({coefficient: coefficient, variable: variable, exponent: exponent});
         }
 
+        //CONSTANT TERMS
+        //TODO:
+        //* x^0
         let c: Array<string> = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g)
         let k: Array<number> = [];
         for (let item in c) {
@@ -131,7 +145,6 @@ class Polynomial {
     }
 }
 
-let x = {coefficient: 1, variable: "x", exponent: 2};
 let f = new Polynomial("x^2 - 2x + 1 - 2");
 
 console.log(f.evaluate());
