@@ -204,7 +204,12 @@ class Polynomial {
             }
             l.unshift({coefficient: coefficient, variable: Var, exponent: i})
         }
-        
+
+        for (let hedgehog in l) {
+            if (l[hedgehog].exponent === 0 ) {
+                l[hedgehog].variable = null;
+            }
+        }
 
         return l;
 

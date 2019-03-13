@@ -208,6 +208,11 @@ var Polynomial = /** @class */ (function () {
             }
             l.unshift({ coefficient: coefficient, variable: Var, exponent: i });
         }
+        for (var hedgehog in l) {
+            if (l[hedgehog].exponent === 0) {
+                l[hedgehog].variable = null;
+            }
+        }
         return l;
     };
     return Polynomial;
