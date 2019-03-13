@@ -87,7 +87,7 @@ class Polynomial {
 
     evaluate() {
         //TODO:
-        // *
+        // * this fucking needs work
 
         let f: string = this.stripWhitespace(this.func);
         let g: RegExpMatchArray = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g);
@@ -181,7 +181,7 @@ class Polynomial {
             constant = constant + item;
         }
 
-        let cterm: Term = {coefficient: constant, variable: null,  exponent: 0};
+        let cterm: Term = {coefficient: constant, variable: "",  exponent: 0};
 
         h.push(cterm);
 
@@ -214,8 +214,24 @@ class Polynomial {
         return l;
 
     }
+
+    differentiate() {
+        let f = this.evaluate();
+
+        for (let hedgehog in f) {
+            f[hedgehog].coefficient = f[hedgehog].coefficient * f[hedgehog].exponent;
+            if (f[hedgehog].exponent !== 0) {
+                f[hedgehog].exponent = f[hedgehog].exponent - 1
+            } else {
+                f.splice(Number(hedgehog), 1);
+            }
+        }
+
+        return f
+    }
 }
 
 let f = new Polynomial("x^2 - 2x + 1 - 2 + 4x^0 + 9x - 5x + 8x^2 -x^2+7x^3");
 
 console.log(f.evaluate());
+console.log(f.differentiate());

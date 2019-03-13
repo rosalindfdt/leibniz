@@ -101,7 +101,7 @@ var Polynomial = /** @class */ (function () {
     };
     Polynomial.prototype.evaluate = function () {
         //TODO:
-        // *
+        // * this fucking needs work
         var f = this.stripWhitespace(this.func);
         var g = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g);
         var c = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g);
@@ -215,7 +215,21 @@ var Polynomial = /** @class */ (function () {
         }
         return l;
     };
+    Polynomial.prototype.differentiate = function () {
+        var f = this.evaluate();
+        for (var hedgehog in f) {
+            f[hedgehog].coefficient = f[hedgehog].coefficient * f[hedgehog].exponent;
+            if (f[hedgehog].exponent !== 0) {
+                f[hedgehog].exponent = f[hedgehog].exponent - 1;
+            }
+            else {
+                f.splice(Number(hedgehog), 1);
+            }
+        }
+        return f;
+    };
     return Polynomial;
 }());
 var f = new Polynomial("x^2 - 2x + 1 - 2 + 4x^0 + 9x - 5x + 8x^2 -x^2+7x^3");
 console.log(f.evaluate());
+console.log(f.differentiate());
