@@ -204,7 +204,7 @@ class Polynomial {
             }
             l.unshift({coefficient: coefficient, variable: Var, exponent: i})
         }
-
+        
 
         return l;
 
