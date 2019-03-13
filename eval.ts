@@ -181,7 +181,7 @@ class Polynomial {
             constant = constant + item;
         }
 
-        let cterm: Term = {coefficient: constant, variable: "",  exponent: 0};
+        let cterm: Term = {coefficient: constant, variable: null,  exponent: 0};
 
         h.push(cterm);
 
