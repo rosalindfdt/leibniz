@@ -80,7 +80,7 @@ class Polynomial {
 
     parse() {
         //TODO:
-        // * convert back to formatted string
+        // * convert to formatted string
         let f: Array<string> = this.func.match(/^[a-z](?=:=)\([a-z]\)/);
         return f;
     }
@@ -88,8 +88,13 @@ class Polynomial {
     evaluate() {
         //TODO:
         // *
-        let f: string = this.stripWhitespace(this.func)
-        let g: Array<string> = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g)
+
+        let f: string = this.stripWhitespace(this.func);
+        let g: RegExpMatchArray = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g);
+        let c: RegExpMatchArray = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g);
+        let x: RegExpMatchArray = f.match(/(\+|-)[0-9][0-9]*(?=[a-z]\^0)/g);
+
+        let Var: string = f.match(/[a-z]/)[0];
         for (let term in g) {
             //prepend + to positive cx^e for consistency
             //why though
@@ -101,17 +106,20 @@ class Polynomial {
 
         let h: Array<Term> = [];
         for (let item of g) {
-            let coefficientmatch: RegExpMatchArray = item.match(/(\+|-)[0-9][0-9]*/g);
+            let coefficientmatch: RegExpMatchArray = item.match(/(\+|-)([0-9][0-9]*)?/g);
             let variablematch: RegExpMatchArray = item.match(/[a-z](?!\^0)/g);
             let exponentmatch: RegExpMatchArray = item.match(/(?<=\^)[0-9][0-9]*/g)
+            //console.log(coefficientmatch);
 
             let coefficient: number;
-            if (coefficientmatch !== null) {
-                coefficient = Number(coefficientmatch[0]);
+            if (coefficientmatch[0] === '+') {
+                coefficient = 1;
+            } else if (coefficientmatch[0] ===  '-') {
+                coefficient = -1;
             } else {
-                //x = 1x
-                coefficient = 1
+                coefficient = Number(coefficientmatch[0]);
             }
+
 
             let variable: string;
             if (variablematch !== null) {
@@ -132,11 +140,33 @@ class Polynomial {
             }
         }
 
+        //for (let power in h) {
+        //
+        //}
+
+        //let i: Array<Term> = [];
+        //for (let term in h) {
+        //    let d: number = h[term].coefficient;
+        //    for (let oterm of h) {
+        //        if (h[term] !== oterm) {
+        //            //console.log(term);
+        //            //why is term a string
+        //            //because in
+        //            if (h[term].exponent === oterm.exponent) {
+        //                //console.log(term.exponent);
+        //                d = d + oterm.coefficient;
+        //                console.log(d);
+        //                h.splice(Number(term), 1);
+        //                i.push({coefficient: d, variable: h[term].variable, exponent: h[term].exponent});
+        //            }
+        //        }
+        //    }
+        //}
+        //console.log(i);
+
         //CONSTANT TERMS
         //TODO:
-        // * x^0 YEP
-        let c: Array<string> = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g)
-        let x: Array<string> = f.match(/(\+|-)[0-9][0-9]*(?=[a-z]\^0)/g)
+        // * x^0 YEP actually nope
 
         let k: Array<number> = [];
         for (let item in c) {
@@ -155,11 +185,32 @@ class Polynomial {
 
         h.push(cterm);
 
-        return h;
+        let highpower: number = 0;
+        //THIS IS A THING NOW AYY
+        for (let hedgehog of h) {
+            if (hedgehog.exponent > highpower) {
+                highpower = hedgehog.exponent;
+            }
+        }
+
+        let l: Array<Term> = [];
+        for (let i = 0; i <= highpower; i++) {
+            let coefficient: number = 0;
+            for (let hedgehog of h) {
+                if (hedgehog.exponent === i) {
+                    coefficient += hedgehog.coefficient;
+                    //console.log(coefficient);
+                }
+            }
+            l.unshift({coefficient: coefficient, variable: Var, exponent: i})
+        }
+
+
+        return l;
 
     }
 }
 
-let f = new Polynomial("x^2 - 2x + 1 - 2 + 3x^0");
+let f = new Polynomial("x^2 - 2x + 1 - 2 + 4x^0 + 9x - 5x + 8x^2 -x^2+7x^3");
 
 console.log(f.evaluate());

@@ -1,6 +1,7 @@
 var Functions = /** @class */ (function () {
     function Functions() {
     }
+    //also is this?
     Functions.prototype.assign = function (func) {
         switch (func.func[0]) {
             case "a": {
@@ -94,13 +95,18 @@ var Polynomial = /** @class */ (function () {
     };
     Polynomial.prototype.parse = function () {
         //TODO:
-        //* convert back to formatted string
+        // * convert to formatted string
         var f = this.func.match(/^[a-z](?=:=)\([a-z]\)/);
         return f;
     };
     Polynomial.prototype.evaluate = function () {
+        //TODO:
+        // *
         var f = this.stripWhitespace(this.func);
         var g = f.match(/(\+|-)?(([0-9][0-9]*)?[a-z](\^[0-9][0-9]*)?)/g);
+        var c = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g);
+        var x = f.match(/(\+|-)[0-9][0-9]*(?=[a-z]\^0)/g);
+        var Var = f.match(/[a-z]/)[0];
         for (var term in g) {
             //prepend + to positive cx^e for consistency
             //why though
@@ -112,16 +118,19 @@ var Polynomial = /** @class */ (function () {
         var h = [];
         for (var _i = 0, g_1 = g; _i < g_1.length; _i++) {
             var item = g_1[_i];
-            var coefficientmatch = item.match(/(\+|-)[0-9][0-9]*/g);
+            var coefficientmatch = item.match(/(\+|-)([0-9][0-9]*)?/g);
             var variablematch = item.match(/[a-z](?!\^0)/g);
             var exponentmatch = item.match(/(?<=\^)[0-9][0-9]*/g);
+            //console.log(coefficientmatch);
             var coefficient = void 0;
-            if (coefficientmatch !== null) {
-                coefficient = Number(coefficientmatch[0]);
+            if (coefficientmatch[0] === '+') {
+                coefficient = 1;
+            }
+            else if (coefficientmatch[0] === '-') {
+                coefficient = -1;
             }
             else {
-                //x = 1x
-                coefficient = 1;
+                coefficient = Number(coefficientmatch[0]);
             }
             var variable = void 0;
             if (variablematch !== null) {
@@ -140,11 +149,31 @@ var Polynomial = /** @class */ (function () {
                 h.push({ coefficient: coefficient, variable: variable, exponent: exponent });
             }
         }
+        //for (let power in h) {
+        //
+        //}
+        //let i: Array<Term> = [];
+        //for (let term in h) {
+        //    let d: number = h[term].coefficient;
+        //    for (let oterm of h) {
+        //        if (h[term] !== oterm) {
+        //            //console.log(term);
+        //            //why is term a string
+        //            //because in
+        //            if (h[term].exponent === oterm.exponent) {
+        //                //console.log(term.exponent);
+        //                d = d + oterm.coefficient;
+        //                console.log(d);
+        //                h.splice(Number(term), 1);
+        //                i.push({coefficient: d, variable: h[term].variable, exponent: h[term].exponent});
+        //            }
+        //        }
+        //    }
+        //}
+        //console.log(i);
         //CONSTANT TERMS
         //TODO:
-        //* x^0 YEP
-        var c = f.match(/(\+|-)[0-9][0-9]*(?![a-z])/g);
-        var x = f.match(/(\+|-)[0-9][0-9]*(?=[a-z]\^0)/g);
+        // * x^0 YEP actually nope
         var k = [];
         for (var item in c) {
             k[item] = Number(c[item]);
@@ -159,9 +188,29 @@ var Polynomial = /** @class */ (function () {
         }
         var cterm = { coefficient: constant, variable: "", exponent: 0 };
         h.push(cterm);
-        return h;
+        var highpower = 0;
+        //THIS IS A THING NOW AYY
+        for (var _b = 0, h_1 = h; _b < h_1.length; _b++) {
+            var hedgehog = h_1[_b];
+            if (hedgehog.exponent > highpower) {
+                highpower = hedgehog.exponent;
+            }
+        }
+        var l = [];
+        for (var i = 0; i <= highpower; i++) {
+            var coefficient = 0;
+            for (var _c = 0, h_2 = h; _c < h_2.length; _c++) {
+                var hedgehog = h_2[_c];
+                if (hedgehog.exponent === i) {
+                    coefficient += hedgehog.coefficient;
+                    //console.log(coefficient);
+                }
+            }
+            l.unshift({ coefficient: coefficient, variable: Var, exponent: i });
+        }
+        return l;
     };
     return Polynomial;
 }());
-var f = new Polynomial("x^2 - 2x + 1 - 2 + 3x^0");
+var f = new Polynomial("x^2 - 2x + 1 - 2 + 4x^0 + 9x - 5x + 8x^2 -x^2+7x^3");
 console.log(f.evaluate());
